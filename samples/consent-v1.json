@@ -1,0 +1,11 @@
+{
+  "schema": "consent-document-v1",
+  "study_ref": "TRIAL-ALPHA",
+  "revision_label": "V1",
+  "sections": [
+    {"section_id": "RISK-1", "category": "RISK", "text": "The known risks are headache and fatigue."},
+    {"section_id": "PROC-1", "category": "PROCEDURE", "text": "One blood draw is required."},
+    {"section_id": "RIGHT-1", "category": "WITHDRAWAL", "text": "Participants may withdraw at any time."},
+    {"section_id": "DATA-1", "category": "DATA_USE", "text": "Coded data is retained for five years."}
+  ]
+}

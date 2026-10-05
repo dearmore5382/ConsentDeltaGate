@@ -1,0 +1,8 @@
+{
+  "network": "studionet",
+  "contract": "0xC20fCbfE9fCF97624ED45cd17cF3Ec98cA82dEc2",
+  "deployer_role": "deployment_only",
+  "source_sha256": "8be48ff7d3d6036f45e47a67e995659922bb4e7d7491e03e86f6485dd78a52de",
+  "source_parity": true,
+  "live_evidence_status": "complete"
+}

@@ -1,0 +1,429 @@
+{
+  "network": "studionet",
+  "contract": "0xC20fCbfE9fCF97624ED45cd17cF3Ec98cA82dEc2",
+  "source_sha256": "8be48ff7d3d6036f45e47a67e995659922bb4e7d7491e03e86f6485dd78a52de",
+  "source_parity": true,
+  "roles": {
+    "study_authority": "0x736A168247e3f0C52F7907c9a8fDac572DF9c8bB",
+    "trial_site": "0xA63DE24e30C88FB1019E8956654730316e36eDBE"
+  },
+  "deployer_role": "deployment_only",
+  "steps": [
+    {
+      "id": "F1-invalid-same-role",
+      "actor": "0x736A168247e3f0C52F7907c9a8fDac572DF9c8bB",
+      "method": "create_study",
+      "args": [
+        "TRIAL-BAD",
+        "0x736A168247e3f0C52F7907c9a8fDac572DF9c8bB",
+        "{\"schema\":\"consent-document-v1\",\"study_ref\":\"TRIAL-LIVE-2026\",\"revision_label\":\"V1\",\"sections\":[{\"section_id\":\"RISK-1\",\"category\":\"RISK\",\"text\":\"The known risks are headache and fatigue.\"},{\"section_id\":\"PROC-1\",\"category\":\"PROCEDURE\",\"text\":\"One blood draw is required.\"},{\"section_id\":\"RIGHT-1\",\"category\":\"WITHDRAWAL\",\"text\":\"Participants may withdraw at any time.\"},{\"section_id\":\"DATA-1\",\"category\":\"DATA_USE\",\"text\":\"Coded data is retained for five years.\"}]}"
+      ],
+      "return": "INVALID_STUDY",
+      "expected": [
+        "INVALID_STUDY"
+      ],
+      "tx_hash": "0xadddfa3cef52737fe7e2232b0be5f936bb5815239a17ccd6c0729ffbf496986f",
+      "explorer": "https://explorer-studio.genlayer.com/tx/0xadddfa3cef52737fe7e2232b0be5f936bb5815239a17ccd6c0729ffbf496986f",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "readback": null
+    },
+    {
+      "id": "H1-create-study",
+      "actor": "0x736A168247e3f0C52F7907c9a8fDac572DF9c8bB",
+      "method": "create_study",
+      "args": [
+        "TRIAL-LIVE-2026",
+        "0xA63DE24e30C88FB1019E8956654730316e36eDBE",
+        "{\"schema\":\"consent-document-v1\",\"study_ref\":\"TRIAL-LIVE-2026\",\"revision_label\":\"V1\",\"sections\":[{\"section_id\":\"RISK-1\",\"category\":\"RISK\",\"text\":\"The known risks are headache and fatigue.\"},{\"section_id\":\"PROC-1\",\"category\":\"PROCEDURE\",\"text\":\"One blood draw is required.\"},{\"section_id\":\"RIGHT-1\",\"category\":\"WITHDRAWAL\",\"text\":\"Participants may withdraw at any time.\"},{\"section_id\":\"DATA-1\",\"category\":\"DATA_USE\",\"text\":\"Coded data is retained for five years.\"}]}"
+      ],
+      "return": "1",
+      "expected": [
+        "0",
+        "1"
+      ],
+      "tx_hash": "0xf160b1b77406ca0088d480678793667558f0c9c286da926ce96dc45079f20542",
+      "explorer": "https://explorer-studio.genlayer.com/tx/0xf160b1b77406ca0088d480678793667558f0c9c286da926ce96dc45079f20542",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "readback": null
+    },
+    {
+      "id": "F2-outsider-site-action",
+      "actor": "0x736A168247e3f0C52F7907c9a8fDac572DF9c8bB",
+      "method": "record_consent",
+      "args": [
+        1,
+        "18929ab86b599e94c8d28073a1929065c33e459ff010917561b205a914ef1b41",
+        0,
+        "0fa1a57ca8b6991a68c85a2435af9f43024b4f1913d811851274b197ee65c242"
+      ],
+      "return": "SITE_ONLY",
+      "expected": [
+        "SITE_ONLY"
+      ],
+      "tx_hash": "0x08750ec622f64860e82ace6a99c2a04ad48521f81f3a2602637285802fd3dab7",
+      "explorer": "https://explorer-studio.genlayer.com/tx/0x08750ec622f64860e82ace6a99c2a04ad48521f81f3a2602637285802fd3dab7",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "readback": null
+    },
+    {
+      "id": "F2b-wrong-global-revision",
+      "actor": "0xA63DE24e30C88FB1019E8956654730316e36eDBE",
+      "method": "record_consent",
+      "args": [
+        1,
+        "18929ab86b599e94c8d28073a1929065c33e459ff010917561b205a914ef1b41",
+        0,
+        "0fa1a57ca8b6991a68c85a2435af9f43024b4f1913d811851274b197ee65c242"
+      ],
+      "return": "CONSENT_MUST_TARGET_CURRENT",
+      "expected": [
+        "CONSENT_MUST_TARGET_CURRENT"
+      ],
+      "tx_hash": "0xa4e65539c484549ccb77e5da7d3a6c71e373cad59f5a4dd9474214ce94917cd0",
+      "explorer": "https://explorer-studio.genlayer.com/tx/0xa4e65539c484549ccb77e5da7d3a6c71e373cad59f5a4dd9474214ce94917cd0",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "readback": {
+        "error": "SUBJECT_NOT_FOUND"
+      }
+    },
+    {
+      "id": "H2-site-baseline-consent",
+      "actor": "0xA63DE24e30C88FB1019E8956654730316e36eDBE",
+      "method": "record_consent",
+      "args": [
+        1,
+        "18929ab86b599e94c8d28073a1929065c33e459ff010917561b205a914ef1b41",
+        1,
+        "0fa1a57ca8b6991a68c85a2435af9f43024b4f1913d811851274b197ee65c242"
+      ],
+      "return": "CONSENT_RECORDED",
+      "expected": [
+        "CONSENT_RECORDED"
+      ],
+      "tx_hash": "0x1ce603e0988ab94ce543870f2aaa7b5d13053af56ec660d9913d4a0ae06e48a0",
+      "explorer": "https://explorer-studio.genlayer.com/tx/0x1ce603e0988ab94ce543870f2aaa7b5d13053af56ec660d9913d4a0ae06e48a0",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "readback": {
+        "confirmed_for_current": false,
+        "consent_artifact_sha256": "0fa1a57ca8b6991a68c85a2435af9f43024b4f1913d811851274b197ee65c242",
+        "consented_sequence": 0,
+        "current_sequence": 0,
+        "reconsent_count": 0,
+        "status": "ELIGIBLE",
+        "subject_commitment": "18929ab86b599e94c8d28073a1929065c33e459ff010917561b205a914ef1b41"
+      }
+    },
+    {
+      "id": "H3-confirm-baseline",
+      "actor": "0xA63DE24e30C88FB1019E8956654730316e36eDBE",
+      "method": "confirm_eligibility",
+      "args": [
+        1,
+        "18929ab86b599e94c8d28073a1929065c33e459ff010917561b205a914ef1b41"
+      ],
+      "return": "ELIGIBILITY_CONFIRMED",
+      "expected": [
+        "ELIGIBILITY_CONFIRMED"
+      ],
+      "tx_hash": "0xdb2a94afd367ca8ce6d2eaf1f73e27455182e37e9fd8fa84abfc53c28c190e1e",
+      "explorer": "https://explorer-studio.genlayer.com/tx/0xdb2a94afd367ca8ce6d2eaf1f73e27455182e37e9fd8fa84abfc53c28c190e1e",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "readback": {
+        "confirmed_for_current": true,
+        "consent_artifact_sha256": "0fa1a57ca8b6991a68c85a2435af9f43024b4f1913d811851274b197ee65c242",
+        "consented_sequence": 0,
+        "current_sequence": 0,
+        "reconsent_count": 0,
+        "status": "ELIGIBLE",
+        "subject_commitment": "18929ab86b599e94c8d28073a1929065c33e459ff010917561b205a914ef1b41"
+      }
+    },
+    {
+      "id": "H4-propose-material-revision",
+      "actor": "0x736A168247e3f0C52F7907c9a8fDac572DF9c8bB",
+      "method": "propose_revision",
+      "args": [
+        1,
+        1,
+        "{\"schema\":\"consent-document-v1\",\"study_ref\":\"TRIAL-LIVE-2026\",\"revision_label\":\"V2\",\"sections\":[{\"section_id\":\"RISK-1\",\"category\":\"RISK\",\"text\":\"A newly identified cardiac risk may require additional monitoring.\"},{\"section_id\":\"PROC-1\",\"category\":\"PROCEDURE\",\"text\":\"One blood draw is required.\"},{\"section_id\":\"RIGHT-1\",\"category\":\"WITHDRAWAL\",\"text\":\"Participants may withdraw at any time.\"},{\"section_id\":\"DATA-1\",\"category\":\"DATA_USE\",\"text\":\"Coded data is retained for five years.\"}]}"
+      ],
+      "return": "2",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "tx_hash": "0xc75dd02d9d60591fa10dbe0313e7f318d80ae0dc0df8a9d9cb41be183118a7c1",
+      "explorer": "https://explorer-studio.genlayer.com/tx/0xc75dd02d9d60591fa10dbe0313e7f318d80ae0dc0df8a9d9cb41be183118a7c1",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "readback": null
+    },
+    {
+      "id": "F3-confirm-before-assessment",
+      "actor": "0xA63DE24e30C88FB1019E8956654730316e36eDBE",
+      "method": "confirm_eligibility",
+      "args": [
+        1,
+        "18929ab86b599e94c8d28073a1929065c33e459ff010917561b205a914ef1b41"
+      ],
+      "return": "REVIEW_INCOMPLETE",
+      "expected": [
+        "REVIEW_INCOMPLETE"
+      ],
+      "tx_hash": "0x93629004923579b34c3a9e94726e97b714a70b9c275c7c48c5cdf00d8f085c05",
+      "explorer": "https://explorer-studio.genlayer.com/tx/0x93629004923579b34c3a9e94726e97b714a70b9c275c7c48c5cdf00d8f085c05",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "readback": {
+        "confirmed_for_current": false,
+        "consent_artifact_sha256": "0fa1a57ca8b6991a68c85a2435af9f43024b4f1913d811851274b197ee65c242",
+        "consented_sequence": 0,
+        "current_sequence": 1,
+        "reconsent_count": 0,
+        "status": "REVIEW_INCOMPLETE",
+        "subject_commitment": "18929ab86b599e94c8d28073a1929065c33e459ff010917561b205a914ef1b41"
+      }
+    },
+    {
+      "id": "F4-site-cannot-propose",
+      "actor": "0xA63DE24e30C88FB1019E8956654730316e36eDBE",
+      "method": "propose_revision",
+      "args": [
+        1,
+        1,
+        "{\"schema\":\"consent-document-v1\",\"study_ref\":\"TRIAL-LIVE-2026\",\"revision_label\":\"V2\",\"sections\":[{\"section_id\":\"RISK-1\",\"category\":\"RISK\",\"text\":\"A newly identified cardiac risk may require additional monitoring.\"},{\"section_id\":\"PROC-1\",\"category\":\"PROCEDURE\",\"text\":\"One blood draw is required.\"},{\"section_id\":\"RIGHT-1\",\"category\":\"WITHDRAWAL\",\"text\":\"Participants may withdraw at any time.\"},{\"section_id\":\"DATA-1\",\"category\":\"DATA_USE\",\"text\":\"Coded data is retained for five years.\"}]}"
+      ],
+      "return": "AUTHORITY_ONLY",
+      "expected": [
+        "AUTHORITY_ONLY"
+      ],
+      "tx_hash": "0x7690aa7e96dd293e7578c5e899fef1f4201409b0a69a0cc8381652042a8d9020",
+      "explorer": "https://explorer-studio.genlayer.com/tx/0x7690aa7e96dd293e7578c5e899fef1f4201409b0a69a0cc8381652042a8d9020",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "readback": null
+    },
+    {
+      "id": "H5-consensus-assessment",
+      "actor": "0xA63DE24e30C88FB1019E8956654730316e36eDBE",
+      "method": "assess_transition",
+      "args": [
+        1,
+        2
+      ],
+      "return": "RECONSENT_REQUIRED",
+      "expected": [
+        "RECONSENT_REQUIRED"
+      ],
+      "tx_hash": "0x79e42c7a9c61d68cb8042c79d2d557c2facf0ff598259ef2d3126c4342813a3b",
+      "explorer": "https://explorer-studio.genlayer.com/tx/0x79e42c7a9c61d68cb8042c79d2d557c2facf0ff598259ef2d3126c4342813a3b",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "readback": {
+        "document_sha256": "d61f086d50f4083210d4039f329b2a182b8ab4eb55400de9bd8c668d58e7158b",
+        "label": "V2",
+        "observation": "{\"child_citations\":[\"RISK-1\"],\"data_use_change\":\"NONE\",\"parent_citations\":[\"RISK-1\"],\"procedure_change\":\"NONE\",\"risk_change\":\"MATERIAL\",\"withdrawal_change\":\"NONE\"}",
+        "outcome": "RECONSENT_REQUIRED",
+        "parent_revision_id": 1,
+        "revision_id": 2,
+        "sequence": 1,
+        "state": "ASSESSED",
+        "study_id": 1
+      }
+    },
+    {
+      "id": "C1-material-block",
+      "actor": "0xA63DE24e30C88FB1019E8956654730316e36eDBE",
+      "method": "confirm_eligibility",
+      "args": [
+        1,
+        "18929ab86b599e94c8d28073a1929065c33e459ff010917561b205a914ef1b41"
+      ],
+      "return": "BLOCKED_PENDING_RECONSENT",
+      "expected": [
+        "BLOCKED_PENDING_RECONSENT"
+      ],
+      "tx_hash": "0xe561f61a8009c965e82cf5a62514b33c73b49d919a60a76f7d3c13d0330346c3",
+      "explorer": "https://explorer-studio.genlayer.com/tx/0xe561f61a8009c965e82cf5a62514b33c73b49d919a60a76f7d3c13d0330346c3",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "readback": {
+        "confirmed_for_current": false,
+        "consent_artifact_sha256": "0fa1a57ca8b6991a68c85a2435af9f43024b4f1913d811851274b197ee65c242",
+        "consented_sequence": 0,
+        "current_sequence": 1,
+        "reconsent_count": 0,
+        "status": "BLOCKED_PENDING_RECONSENT",
+        "subject_commitment": "18929ab86b599e94c8d28073a1929065c33e459ff010917561b205a914ef1b41"
+      }
+    },
+    {
+      "id": "F5-artifact-replay",
+      "actor": "0xA63DE24e30C88FB1019E8956654730316e36eDBE",
+      "method": "record_consent",
+      "args": [
+        1,
+        "18929ab86b599e94c8d28073a1929065c33e459ff010917561b205a914ef1b41",
+        2,
+        "0fa1a57ca8b6991a68c85a2435af9f43024b4f1913d811851274b197ee65c242"
+      ],
+      "return": "ARTIFACT_ALREADY_USED",
+      "expected": [
+        "ARTIFACT_ALREADY_USED"
+      ],
+      "tx_hash": "0xd2572dd848c72274baa1c5ea6cd0a9a49abb1330c474497ec2c67a22dab28d2e",
+      "explorer": "https://explorer-studio.genlayer.com/tx/0xd2572dd848c72274baa1c5ea6cd0a9a49abb1330c474497ec2c67a22dab28d2e",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "readback": {
+        "confirmed_for_current": false,
+        "consent_artifact_sha256": "0fa1a57ca8b6991a68c85a2435af9f43024b4f1913d811851274b197ee65c242",
+        "consented_sequence": 0,
+        "current_sequence": 1,
+        "reconsent_count": 0,
+        "status": "BLOCKED_PENDING_RECONSENT",
+        "subject_commitment": "18929ab86b599e94c8d28073a1929065c33e459ff010917561b205a914ef1b41"
+      }
+    },
+    {
+      "id": "H6-site-reconsent",
+      "actor": "0xA63DE24e30C88FB1019E8956654730316e36eDBE",
+      "method": "record_consent",
+      "args": [
+        1,
+        "18929ab86b599e94c8d28073a1929065c33e459ff010917561b205a914ef1b41",
+        2,
+        "dd63b536ea01d14fe3f2607daf591ec066d654dccee2bcd697a547b80f33b04a"
+      ],
+      "return": "CONSENT_RECORDED",
+      "expected": [
+        "CONSENT_RECORDED"
+      ],
+      "tx_hash": "0x64826cfc177880aad4345fbc41e49133ab78bcac4b845e1f8e5227d8affffeaf",
+      "explorer": "https://explorer-studio.genlayer.com/tx/0x64826cfc177880aad4345fbc41e49133ab78bcac4b845e1f8e5227d8affffeaf",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "readback": {
+        "confirmed_for_current": false,
+        "consent_artifact_sha256": "dd63b536ea01d14fe3f2607daf591ec066d654dccee2bcd697a547b80f33b04a",
+        "consented_sequence": 1,
+        "current_sequence": 1,
+        "reconsent_count": 1,
+        "status": "ELIGIBLE",
+        "subject_commitment": "18929ab86b599e94c8d28073a1929065c33e459ff010917561b205a914ef1b41"
+      }
+    },
+    {
+      "id": "H7-confirm-current",
+      "actor": "0x736A168247e3f0C52F7907c9a8fDac572DF9c8bB",
+      "method": "confirm_eligibility",
+      "args": [
+        1,
+        "18929ab86b599e94c8d28073a1929065c33e459ff010917561b205a914ef1b41"
+      ],
+      "return": "ELIGIBILITY_CONFIRMED",
+      "expected": [
+        "ELIGIBILITY_CONFIRMED"
+      ],
+      "tx_hash": "0xf48a517b4cb8ff9884304c1e08658ce580169d901aa5ee2e59ab6eaccc1751ed",
+      "explorer": "https://explorer-studio.genlayer.com/tx/0xf48a517b4cb8ff9884304c1e08658ce580169d901aa5ee2e59ab6eaccc1751ed",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "readback": {
+        "confirmed_for_current": true,
+        "consent_artifact_sha256": "dd63b536ea01d14fe3f2607daf591ec066d654dccee2bcd697a547b80f33b04a",
+        "consented_sequence": 1,
+        "current_sequence": 1,
+        "reconsent_count": 1,
+        "status": "ELIGIBLE",
+        "subject_commitment": "18929ab86b599e94c8d28073a1929065c33e459ff010917561b205a914ef1b41"
+      }
+    },
+    {
+      "id": "H8-close-study",
+      "actor": "0x736A168247e3f0C52F7907c9a8fDac572DF9c8bB",
+      "method": "close_study",
+      "args": [
+        1
+      ],
+      "return": "STUDY_CLOSED",
+      "expected": [
+        "STUDY_CLOSED"
+      ],
+      "tx_hash": "0x8b4753181d9cefdf2e41e8033798974a54287abd9946a76fb4805d363bdb18f5",
+      "explorer": "https://explorer-studio.genlayer.com/tx/0x8b4753181d9cefdf2e41e8033798974a54287abd9946a76fb4805d363bdb18f5",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "readback": {
+        "authority": "0x736A168247e3f0C52F7907c9a8fDac572DF9c8bB",
+        "current_sequence": 1,
+        "site": "0xA63DE24e30C88FB1019E8956654730316e36eDBE",
+        "state": "CLOSED",
+        "study_id": 1,
+        "study_ref": "TRIAL-LIVE-2026"
+      }
+    },
+    {
+      "id": "F6-write-after-close",
+      "actor": "0xA63DE24e30C88FB1019E8956654730316e36eDBE",
+      "method": "record_consent",
+      "args": [
+        1,
+        "9999999999999999999999999999999999999999999999999999999999999999",
+        2,
+        "8888888888888888888888888888888888888888888888888888888888888888"
+      ],
+      "return": "STUDY_NOT_ACTIVE",
+      "expected": [
+        "STUDY_NOT_ACTIVE"
+      ],
+      "tx_hash": "0x25792d64d969b7bbc17da42986516552b6bc5a929380f5e589cd77ecaf11df4d",
+      "explorer": "https://explorer-studio.genlayer.com/tx/0x25792d64d969b7bbc17da42986516552b6bc5a929380f5e589cd77ecaf11df4d",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "readback": {
+        "authority": "0x736A168247e3f0C52F7907c9a8fDac572DF9c8bB",
+        "current_sequence": 1,
+        "site": "0xA63DE24e30C88FB1019E8956654730316e36eDBE",
+        "state": "CLOSED",
+        "study_id": 1,
+        "study_ref": "TRIAL-LIVE-2026"
+      }
+    }
+  ],
+  "complete": true,
+  "final_study": {
+    "authority": "0x736A168247e3f0C52F7907c9a8fDac572DF9c8bB",
+    "current_sequence": 1,
+    "site": "0xA63DE24e30C88FB1019E8956654730316e36eDBE",
+    "state": "CLOSED",
+    "study_id": 1,
+    "study_ref": "TRIAL-LIVE-2026"
+  },
+  "final_revision": {
+    "document_sha256": "d61f086d50f4083210d4039f329b2a182b8ab4eb55400de9bd8c668d58e7158b",
+    "label": "V2",
+    "observation": "{\"child_citations\":[\"RISK-1\"],\"data_use_change\":\"NONE\",\"parent_citations\":[\"RISK-1\"],\"procedure_change\":\"NONE\",\"risk_change\":\"MATERIAL\",\"withdrawal_change\":\"NONE\"}",
+    "outcome": "RECONSENT_REQUIRED",
+    "parent_revision_id": 1,
+    "revision_id": 2,
+    "sequence": 1,
+    "state": "ASSESSED",
+    "study_id": 1
+  },
+  "final_subject": {
+    "confirmed_for_current": true,
+    "consent_artifact_sha256": "dd63b536ea01d14fe3f2607daf591ec066d654dccee2bcd697a547b80f33b04a",
+    "consented_sequence": 1,
+    "current_sequence": 1,
+    "reconsent_count": 1,
+    "status": "ELIGIBLE",
+    "subject_commitment": "18929ab86b599e94c8d28073a1929065c33e459ff010917561b205a914ef1b41"
+  }
+}

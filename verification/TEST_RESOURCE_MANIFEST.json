@@ -1,0 +1,24 @@
+{
+  "schema": "genlayer-test-resource-manifest-v1",
+  "project": "ConsentDeltaGate",
+  "evidence_policy": {
+    "authoritative_source": "Complete consent revision JSON submitted and signed by the study authority wallet",
+    "storage": "Canonical JSON and SHA-256 digest stored directly in contract state",
+    "not_accepted": ["search snippets", "claimant summaries", "mutable URLs", "model memory"],
+    "adversarial_treatment": "Document text is quoted as untrusted data in the prompt; model output is schema-closed and citations are grounded to section IDs",
+    "temporal_model": "Immutable parent-child snapshots with revision-bound eligibility confirmations"
+  },
+  "fixtures": [
+    {"path": "samples/consent-v1.json", "purpose": "baseline authority document"},
+    {"path": "samples/consent-v2-admin.json", "purpose": "non-material control"},
+    {"path": "samples/consent-v2-material.json", "purpose": "material risk delta"}
+  ],
+  "live_evidence_required_before_submission": [
+    "deployed source parity digest",
+    "transaction hash and explorer link for every write",
+    "receipt status",
+    "post-transaction state read",
+    "distinct deployment, authority, and site addresses",
+    "at least one genuine nondeterministic assessment transaction"
+  ]
+}
